@@ -1,0 +1,993 @@
+<html lang="pt-BR" style="scroll-behavior:smooth;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>
+        Aruanda - Entrega Espiritual
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #050505;
+            color: #8a7a5f;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+            position: relative;
+        }
+
+        /* Background images with dark overlay using img tags */
+        #background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            filter: grayscale(100%) brightness(0.15);
+        }
+
+        #background-container img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120vw;
+            height: auto;
+            max-height: 120vh;
+            transform: translate(-50%, -50%);
+            opacity: 0.07;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        #background-container img:nth-child(2) {
+            top: 55%;
+            left: 55%;
+        }
+
+        a {
+            color: #8a7a5f;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #b9a978;
+        }
+
+        /* Button style: dark, less rounded, elegant */
+        .btn-dark {
+            background-color: #3a2f1f;
+            color: #b9a978;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            border: 2px solid #6e5a2a;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgb(58 47 31 / 0.6);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+                box-shadow 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-dark:hover,
+        .btn-dark:focus {
+            background-color: #6e5a2a;
+            color: #050505;
+            border-color: #b9a978;
+            box-shadow: 0 6px 12px rgb(185 169 120 / 0.8);
+            outline: none;
+        }
+
+        header {
+            background: rgba(5, 5, 5, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 60;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3a2f1f;
+            user-select: none;
+        }
+
+        #logo-img {
+            height: 48px;
+            width: auto;
+            user-select: none;
+            filter: none;
+            mix-blend-mode: multiply;
+            opacity: 0.85;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 1.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            user-select: none;
+        }
+
+        nav ul li a {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            color: #8a7a5f;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a.active,
+        nav ul li a:hover {
+            background-color: rgba(50, 40, 30, 0.3);
+            color: #b9a978;
+        }
+
+        #menu-toggle {
+            background: none;
+            border: none;
+            color: #8a7a5f;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            transition: color 0.3s ease;
+        }
+
+        #menu-toggle:hover {
+            color: #b9a978;
+        }
+
+        #mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(5, 5, 5, 0.95);
+            position: fixed;
+            top: 4.5rem;
+            left: 0;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            z-index: 50;
+            border-top: 1px solid #3a2f1f;
+            user-select: none;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        #mobile-menu a {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(50, 40, 30, 0.15);
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #8a7a5f;
+            transition: background-color 0.3s ease;
+        }
+
+        #mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        #mobile-menu a:hover {
+            background-color: rgba(50, 40, 30, 0.3);
+            color: #b9a978;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 6rem 1rem 4rem;
+            user-select: text;
+            text-align: left;
+            color: #8a7a5f;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 1rem;
+            padding: 2.5rem 3rem;
+            box-shadow: inset 0 0 20px #2a220f;
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #b9a978;
+            border: 1px solid #3a2f1f;
+            user-select: text;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        .container h2 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #d1c28f;
+            user-select: text;
+        }
+
+        .container label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #b9a978;
+            user-select: text;
+        }
+
+        .container textarea,
+        .container input[type="text"],
+        .container input[type="date"],
+        .container input[type="time"],
+        .container input[type="datetime-local"] {
+            width: 100%;
+            margin-top: 0.25rem;
+            background: #1a1a1a;
+            border: 1px solid #6e5a2a;
+            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            color: #d1c28f;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            resize: vertical;
+            user-select: text;
+            transition: border-color 0.3s ease;
+        }
+
+        .container textarea {
+            min-height: 3.5rem;
+        }
+
+        .container input:focus,
+        .container textarea:focus {
+            outline: none;
+            border-color: #b9a978;
+            background: #2a2a1a;
+            color: #f0e9c7;
+        }
+
+        .declaration-text {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #a08c4a;
+            user-select: text;
+            white-space: pre-line;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal {
+            background: #1a1a1a;
+            border-radius: 1rem;
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px #6e5a2a;
+            position: relative;
+            padding: 2rem 2.5rem;
+            color: #b9a978;
+            user-select: text;
+        }
+
+        .modal h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #d1c28f;
+        }
+
+        .modal button.close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: #b9a978;
+            font-size: 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .modal button.close-btn:hover,
+        .modal button.close-btn:focus {
+            color: #f0e9c7;
+            outline: none;
+        }
+
+        .modal form {
+            margin-top: 1rem;
+        }
+
+        .modal form button.submit-btn {
+            margin-top: 1.5rem;
+            background-color: #3a2f1f;
+            color: #b9a978;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            border: 2px solid #6e5a2a;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgb(58 47 31 / 0.6);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+                box-shadow 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .modal form button.submit-btn:disabled {
+            background-color: #1f1a0f;
+            border-color: #3a2f1f;
+            color: #6e5a2a;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .modal form button.submit-btn:hover:not(:disabled),
+        .modal form button.submit-btn:focus:not(:disabled) {
+            background-color: #6e5a2a;
+            color: #050505;
+            border-color: #b9a978;
+            box-shadow: 0 6px 12px rgb(185 169 120 / 0.8);
+            outline: none;
+        }
+
+        .countdown-text {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #a08c4a;
+            text-align: center;
+            user-select: none;
+        }
+
+        .video-modal video {
+            width: 100%;
+            border-radius: 1rem;
+            outline: none;
+            background: black;
+        }
+
+        .final-message {
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #b9a978;
+            text-align: center;
+            user-select: text;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            #menu-toggle {
+                display: block;
+            }
+
+            #mobile-menu {
+                display: none;
+            }
+
+            main {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .container {
+                max-width: 90vw;
+                font-size: 0.95rem;
+                padding: 2rem 2rem;
+            }
+
+            .modal {
+                max-width: 90vw;
+                padding: 1.5rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            footer {
+                font-size: 0.85rem;
+                padding: 1rem 1rem;
+            }
+
+            .container {
+                font-size: 0.9rem;
+                padding: 1.5rem 1.5rem;
+            }
+
+            .btn-dark {
+                font-size: 1rem;
+                padding: 0.6rem 1.5rem;
+            }
+        }
+
+        footer {
+            background: rgba(5, 5, 5, 0.95);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border-top: 1px solid #3a2f1f;
+            user-select: none;
+            color: #6e5a2a;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 10;
+        }
+
+        footer .author-credit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #8a7a5f;
+            font-weight: 400;
+            font-size: 0.9rem;
+            user-select: text;
+        }
+
+        footer .author-credit img {
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            filter: none;
+            opacity: 0.85;
+        }
+
+        /* Hide the audio element visually but keep it playing */
+        #background-audio {
+            position: fixed !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            user-select: none !important;
+            z-index: -9999 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div aria-hidden="true" id="background-container" tabindex="-1">
+        <img alt="Imagem desbotada de símbolos religiosos de Aruanda em tons escuros, com textura mística e espiritual"
+            height="800" src="https://storage.googleapis.com/a1aa/image/8f229486-78aa-4b99-9b36-c20d00d40b4a.jpg"
+            width="1200" />
+        <img alt="Imagem desbotada de símbolos religiosos de Aruanda em tons escuros, com textura mística e espiritual"
+            height="800" src="https://storage.googleapis.com/a1aa/image/8f229486-78aa-4b99-9b36-c20d00d40b4a.jpg"
+            width="1200" />
+    </div>
+    <header class="glass" role="banner">
+        <a aria-label="" href="#">
+
+        </a>
+        <nav aria-label="Menu principal" role="navigation">
+            <ul id="desktop-menu">
+                <li>
+                    <a aria-current="page" class="glass px-3 py-1 active" href="#">
+                        Aruanda
+                    </a>
+                </li>
+            </ul>
+            <button aria-expanded="false" aria-label="Abrir menu" class="glass" id="menu-toggle">
+                <i class="fas fa-bars">
+                </i>
+            </button>
+            <div aria-hidden="true" class="glass" id="mobile-menu" role="menu">
+                <a aria-current="page" class="glass px-3 py-2 rounded-md active" href="#" role="menuitem">
+                    Aruanda
+                </a>
+            </div>
+        </nav>
+    </header>
+    <main class="flex flex-col items-center justify-center" role="main" tabindex="0">
+        <button aria-controls="modal-espiritual" aria-expanded="false" aria-haspopup="dialog" class="btn-dark mt-32"
+            id="open-modal-btn">
+            <i class="fas fa-spa">
+            </i>
+            Entregar à Força de Aruanda
+        </button>
+    </main>
+    <footer class="glass" role="contentinfo">
+        <div>
+            © 2025 Salve Crazy Rec. Todos os direitos reservados.
+        </div>
+        <div class="author-credit">
+            <img alt="Foto do artista Senndy, autor do álbum Aruanda" loading="lazy"
+                src="https://akamai.sscdn.co/letras/385x349/fotos/4/f/4/8/4f4843a41ad2500a87cc430f00e4ddf8.jpg" />
+            <span>
+                Senndy
+            </span>
+        </div>
+    </footer>
+    <!-- Hidden looping audio -->
+    <audio autoplay="" id="background-audio" loop="" muted="">
+        <source src="/aruanda-préviabeat-oficial.mp3" type="audio/mpeg" />
+    </audio>
+    <!-- Modal 1: Form Modal -->
+    <div aria-describedby="modal-desc" aria-labelledby="modal-title" aria-modal="true" class="modal-overlay hidden"
+        id="modal-espiritual" role="dialog" tabindex="-1">
+        <div class="modal max-w-3xl" role="document">
+            <button aria-label="Fechar modal" class="close-btn" id="close-modal-btn">
+                <i class="fas fa-times">
+                </i>
+            </button>
+            <h3 id="modal-title">
+                Entrega Espiritual - Assinatura
+            </h3>
+            <div class="declaration-text mb-4 select-text" id="modal-desc">
+                “Eu não fujo mais do que sou. Eu não nego mais o chamado. Me apresento, inteiro, diante das forças de
+                Aruanda.”
+
+                Na encruzilhada entre o que você foi e o que pode se tornar, há um ponto de silêncio.
+                É ali que os guias esperam.
+                Não para te salvar. Mas para te lembrar quem você é.
+
+                Aruanda não é refúgio para covardes. É lar de espíritos que já foram quebrados, mas não se renderam.
+            </div>
+            <form autocomplete="off" id="espiritual-form" novalidate="">
+                <fieldset class="mb-4">
+                    <legend class="font-bold text-lg mb-2">
+                        I. REGISTRO ESPIRITUAL
+                    </legend>
+                    <label for="nome-completo">
+                        Nome completo:
+                    </label>
+                    <input autocomplete="name" id="nome-completo" name="nome-completo" required="" type="text" />
+                    <label for="nome-mae">
+                        Nome da mãe:
+                    </label>
+                    <input autocomplete="off" id="nome-mae" name="nome-mae" required="" type="text" />
+                    <label for="nome-avo">
+                        Nome da avó materna:
+                    </label>
+                    <input autocomplete="off" id="nome-avo" name="nome-avo" required="" type="text" />
+                    <label for="data-nascimento">
+                        Data de nascimento:
+                    </label>
+                    <input id="data-nascimento" name="data-nascimento" required="" type="date" />
+                    <label for="hora-cidade-nascimento">
+                        Hora e cidade de nascimento:
+                    </label>
+                    <input autocomplete="off" id="hora-cidade-nascimento" name="hora-cidade-nascimento"
+                        placeholder="Ex: 14:30 - Salvador, BA" required="" type="text" />
+                    <label for="nome-espiritual">
+                        Nome espiritual (se já recebeu):
+                    </label>
+                    <input autocomplete="off" id="nome-espiritual" name="nome-espiritual" type="text" />
+                    <label for="iniciado-espiritualmente">
+                        Já foi iniciado espiritualmente? Onde? Por quem?
+                    </label>
+                    <textarea autocomplete="off" id="iniciado-espiritualmente" name="iniciado-espiritualmente"
+                        rows="2"></textarea>
+                </fieldset>
+                <fieldset class="mb-4">
+                    <legend class="font-bold text-lg mb-2">
+                        II. MARCAS DE ALMA
+                    </legend>
+                    <label for="primeira-presenca-guia">
+                        Quando sentiu pela primeira vez a presença de um guia espiritual?
+                    </label>
+                    <textarea autocomplete="off" id="primeira-presenca-guia" name="primeira-presenca-guia" required=""
+                        rows="2"></textarea>
+                    <label for="entidade-acompanhante">
+                        Qual entidade te acompanha ou já te visitou (em sonho ou em gira)?
+                    </label>
+                    <textarea autocomplete="off" id="entidade-acompanhante" name="entidade-acompanhante" required=""
+                        rows="2"></textarea>
+                    <label for="dor-silenciosa">
+                        Que dor você carrega silenciosamente?
+                    </label>
+                    <textarea autocomplete="off" id="dor-silenciosa" name="dor-silenciosa" required=""
+                        rows="2"></textarea>
+                    <label for="desejo-aruanda">
+                        O que você deseja de Aruanda?
+                    </label>
+                    <textarea autocomplete="off" id="desejo-aruanda" name="desejo-aruanda" required=""
+                        rows="2"></textarea>
+                    <label for="disposto-abandonar">
+                        O que está disposto a abandonar para receber o que pede?
+                    </label>
+                    <textarea autocomplete="off" id="disposto-abandonar" name="disposto-abandonar" required=""
+                        rows="2"></textarea>
+                    <label for="medo-profundo">
+                        Qual é o seu medo mais profundo?
+                    </label>
+                    <textarea autocomplete="off" id="medo-profundo" name="medo-profundo" required=""
+                        rows="2"></textarea>
+                    <label for="precisa-morrer">
+                        O que, em você, precisa morrer?
+                    </label>
+                    <textarea autocomplete="off" id="precisa-morrer" name="precisa-morrer" required=""
+                        rows="2"></textarea>
+                </fieldset>
+                <fieldset class="mb-4">
+                    <legend class="font-bold text-lg mb-2">
+                        III. TERMO DE CONSENTIMENTO ESPIRITUAL – ENTREGA À FORÇA DE ARUANDA
+                    </legend>
+                    <div class="declaration-text select-text mb-4">
+                        Este termo não protege o corpo, mas sela o destino da alma.
+                        Ao assinar, declaro que aceito caminhar com a verdade dos guias, e não mais com a mentira da
+                        ilusão.
+                        <br />
+                        <br />
+                        <strong>
+                            CLÁUSULAS DE ENTREGA
+                        </strong>
+                        <br />
+                        1. Entrego minha história – aceito que os guias revelem o que está escondido.
+                        <br />
+                        2. Entrego meu nome – para que os guias me reconheçam em qualquer plano.
+                        <br />
+                        3. Entrego minha vontade – aceito ser guiado sem saber o caminho.
+                        <br />
+                        4. Entrego meu silêncio – prometo guardar o que for segredo espiritual.
+                        <br />
+                        5. Entrego meu medo – aceito ser confrontado por ele.
+                        <br />
+                        6. Entrego meu corpo – que seja instrumento de cura e justiça quando convocado.
+                        <br />
+                        <br />
+                        <strong>
+                            DECLARAÇÃO FINAL
+                        </strong>
+                        <br />
+                        “Com plena lucidez, entrego meu ser aos mistérios de Aruanda.
+                        Aceito o que vier: bênção ou fardo, revelação ou queda.
+                        A partir deste instante, minha alma não caminha só.
+                        Se eu me perder, que os guias me busquem.
+                        Se eu recuar, que os ventos me tragam de volta.
+                        Se eu negar, que a verdade me derrube.”
+                    </div>
+                    <label class="inline-flex items-center mt-2 cursor-pointer select-text" for="confirm-sign">
+                        <input class="mr-2 rounded border-2 border-yellow-700 text-yellow-600 focus:ring-yellow-500"
+                            id="confirm-sign" name="confirm-sign" required="" type="checkbox" />
+                        Eu li e assino o termo de consentimento espiritual acima.
+                    </label>
+                </fieldset>
+                <button aria-label="Confirmar entrega espiritual" class="submit-btn" disabled="" id="submit-btn"
+                    type="submit">
+                    Confirmar Entrega
+                </button>
+                <p class="text-red-600 mt-2 font-semibold hidden" id="form-error" role="alert">
+                </p>
+            </form>
+        </div>
+    </div>
+    <!-- Modal 2: Confirmation with countdown and audio -->
+    <div aria-labelledby="confirm-title" aria-modal="true" class="modal-overlay hidden" id="modal-confirm" role="dialog"
+        tabindex="-1">
+        <div class="modal max-w-xl flex flex-col items-center justify-center" role="document">
+            <button aria-label="Fechar modal" class="close-btn" id="close-confirm-btn">
+                <i class="fas fa-times">
+                </i>
+            </button>
+            <h3 class="mb-4 text-center text-lg font-bold text-yellow-400" id="confirm-title">
+                Confirmação Final
+            </h3>
+            <p class="text-center text-yellow-300 mb-4 select-text">
+                Você confirma que deseja entregar sua alma e seus dados em prol do espiritualismo?
+            </p>
+            <button aria-disabled="true" aria-label="Confirmar entrega após contagem regressiva" class="submit-btn"
+                disabled="" id="confirm-btn">
+                Confirmar (10)
+            </button>
+            <p aria-atomic="true" aria-live="polite" class="countdown-text" id="countdown-text">
+                Aguarde 10 segundos para confirmar...
+            </p>
+        </div>
+    </div>
+    <!-- Modal 3: Video modal -->
+    <div aria-labelledby="video-title" aria-modal="true" class="modal-overlay hidden video-modal" id="modal-video"
+        role="dialog" tabindex="-1">
+        <div class="modal max-w-3xl flex flex-col items-center justify-center" role="document">
+            <button aria-label="Fechar modal" class="close-btn" id="close-video-btn">
+                <i class="fas fa-times">
+                </i>
+            </button>
+            <h3 class="mb-4 text-center text-lg font-bold text-yellow-400" id="video-title">
+                Entrega em Progresso
+            </h3>
+            <video aria-describedby="video-desc" controls="" id="spiritual-video" preload="auto" tabindex="0">
+                <source src="/202504252317.mp4" type="video/webm" />
+                <source src="/202504252317.mp4" type="video/mp4" />
+                Seu navegador não suporta o elemento de vídeo.
+            </video>
+            <p class="sr-only" id="video-desc">
+                Vídeo representando a entrega espiritual, com imagens místicas e simbólicas.
+            </p>
+            <p aria-atomic="true" aria-live="assertive" class="final-message hidden" id="final-message" role="alert">
+                A alma e os dados foram usados em prol do espiritualismo.
+            </p>
+        </div>
+    </div>
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.style.display = 'none';
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        mobileMenu.setAttribute('aria-hidden', 'true');
+
+        menuToggle.addEventListener('click', () => {
+            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            if (expanded) {
+                mobileMenu.style.display = 'none';
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenu.setAttribute('aria-hidden', 'true');
+            } else {
+                mobileMenu.style.display = 'flex';
+                menuToggle.setAttribute('aria-expanded', 'true');
+                menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+                mobileMenu.setAttribute('aria-hidden', 'false');
+            }
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.style.display = 'none';
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenu.setAttribute('aria-hidden', 'true');
+            });
+        });
+
+        // Hide mobile menu on resize if desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                mobileMenu.style.display = 'none';
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenu.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // Elements
+        const openModalBtn = document.getElementById('open-modal-btn');
+        const modalEspiritual = document.getElementById('modal-espiritual');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const espiritualForm = document.getElementById('espiritual-form');
+        const formError = document.getElementById('form-error');
+        const confirmSignCheckbox = document.getElementById('confirm-sign');
+        const submitBtn = document.getElementById('submit-btn');
+
+        const modalConfirm = document.getElementById('modal-confirm');
+        const closeConfirmBtn = document.getElementById('close-confirm-btn');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const countdownText = document.getElementById('countdown-text');
+
+        const modalVideo = document.getElementById('modal-video');
+        const closeVideoBtn = document.getElementById('close-video-btn');
+        const spiritualVideo = document.getElementById('spiritual-video');
+        const finalMessage = document.getElementById('final-message');
+
+        // Audio for scary background music
+        const scaryAudio = new Audio('aruanda-préviabeat-oficial.mp3');
+        scaryAudio.loop = true;
+        scaryAudio.volume = 0.15;
+        scaryAudio.muted = false;
+        scaryAudio.play().catch(() => { /* ignore play errors */ });
+
+        // Open form modal
+        openModalBtn.addEventListener('click', () => {
+            modalEspiritual.classList.remove('hidden');
+            modalEspiritual.focus();
+            openModalBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close form modal
+        closeModalBtn.addEventListener('click', () => {
+            closeFormModal();
+        });
+
+        // Close confirm modal
+        closeConfirmBtn.addEventListener('click', () => {
+            closeConfirmModal();
+        });
+
+        // Close video modal
+        closeVideoBtn.addEventListener('click', () => {
+            closeVideoModal();
+        });
+
+        // Close modals helper functions
+        function closeFormModal() {
+            modalEspiritual.classList.add('hidden');
+            openModalBtn.setAttribute('aria-expanded', 'false');
+            formError.classList.add('hidden');
+            espiritualForm.reset();
+            submitBtn.disabled = true;
+            document.body.style.overflow = '';
+            openModalBtn.focus();
+        }
+
+        function closeConfirmModal() {
+            modalConfirm.classList.add('hidden');
+            confirmBtn.disabled = true;
+            confirmBtn.setAttribute('aria-disabled', 'true');
+            countdownText.textContent = 'Aguarde 10 segundos para confirmar...';
+            countdown = 10;
+            clearInterval(countdownInterval);
+            document.body.style.overflow = '';
+            openModalBtn.focus();
+        }
+
+        function closeVideoModal() {
+            modalVideo.classList.add('hidden');
+            spiritualVideo.pause();
+            spiritualVideo.currentTime = 0;
+            finalMessage.classList.add('hidden');
+            document.body.style.overflow = '';
+            openModalBtn.focus();
+        }
+
+        // Trap focus inside modals for accessibility
+        function trapFocus(element) {
+            const focusableElements = element.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+
+            element.addEventListener('keydown', function (e) {
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstFocusable) {
+                            e.preventDefault();
+                            lastFocusable.focus();
+                        }
+                    } else {
+                        if (document.activeElement === lastFocusable) {
+                            e.preventDefault();
+                            firstFocusable.focus();
+                        }
+                    }
+                }
+                if (e.key === 'Escape') {
+                    if (!modalEspiritual.classList.contains('hidden')) closeFormModal();
+                    if (!modalConfirm.classList.contains('hidden')) closeConfirmModal();
+                    if (!modalVideo.classList.contains('hidden')) closeVideoModal();
+                }
+            });
+        }
+
+        trapFocus(modalEspiritual);
+        trapFocus(modalConfirm);
+        trapFocus(modalVideo);
+
+        // Form validation helper
+        function validateForm(form) {
+            let valid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    valid = false;
+                }
+            });
+            return valid;
+        }
+
+        // Enable submit button only if checkbox is checked and form valid
+        confirmSignCheckbox.addEventListener('change', () => {
+            submitBtn.disabled = !confirmSignCheckbox.checked;
+        });
+
+        // On form submit
+        espiritualForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formError.classList.add('hidden');
+            if (!validateForm(espiritualForm)) {
+                formError.textContent = 'Por favor, preencha todos os campos obrigatórios.';
+                formError.classList.remove('hidden');
+                return;
+            }
+            if (!confirmSignCheckbox.checked) {
+                formError.textContent = 'Você deve assinar o termo para continuar.';
+                formError.classList.remove('hidden');
+                return;
+            }
+            // Close form modal and open confirm modal
+            closeFormModal();
+            openConfirmModal();
+        });
+
+        // Confirm modal logic
+        let countdown = 10;
+        let countdownInterval;
+
+        function openConfirmModal() {
+            modalConfirm.classList.remove('hidden');
+            modalConfirm.focus();
+            document.body.style.overflow = 'hidden';
+            confirmBtn.disabled = true;
+            confirmBtn.setAttribute('aria-disabled', 'true');
+            countdown = 10;
+            countdownText.textContent = `Aguarde ${countdown} segundos para confirmar...`;
+            confirmBtn.textContent = `Confirmar (${countdown})`;
+            countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    countdownText.textContent = `Aguarde ${countdown} segundos para confirmar...`;
+                    confirmBtn.textContent = `Confirmar (${countdown})`;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownText.textContent = 'Você pode confirmar agora.';
+                    confirmBtn.textContent = 'Confirmar';
+                    confirmBtn.disabled = false;
+                    confirmBtn.setAttribute('aria-disabled', 'false');
+                }
+            }, 1000);
+            // Play scary audio (already playing in background, so no action needed)
+        }
+
+        confirmBtn.addEventListener('click', () => {
+            if (confirmBtn.disabled) return;
+            // Close confirm modal and open video modal
+            closeConfirmModal();
+            openVideoModal();
+        });
+
+        // Video modal logic
+        function openVideoModal() {
+            modalVideo.classList.remove('hidden');
+            modalVideo.focus();
+            document.body.style.overflow = 'hidden';
+            finalMessage.classList.add('hidden');
+            spiritualVideo.style.display = 'block';
+            spiritualVideo.currentTime = 0;
+            spiritualVideo.play();
+        }
+
+        spiritualVideo.addEventListener('ended', () => {
+            spiritualVideo.style.display = 'none';
+            finalMessage.classList.remove('hidden');
+        });
+
+        // Accessibility: close modals on outside click
+        [modalEspiritual, modalConfirm, modalVideo].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    if (modal === modalEspiritual) closeFormModal();
+                    if (modal === modalConfirm) closeConfirmModal();
+                    if (modal === modalVideo) closeVideoModal();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
